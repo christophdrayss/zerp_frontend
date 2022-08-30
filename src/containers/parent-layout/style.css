@@ -1,0 +1,36 @@
+#components-layout-demo-top-side-2 .logo {
+    float: left;
+    width: 120px;
+    height: 31px;
+    margin: 16px 24px 16px 0;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.ant-row-rtl #components-layout-demo-top-side-2 .logo {
+    float: right;
+    margin: 16px 0 16px 24px;
+}
+
+.layout-background {
+    background: #fff;
+}
+
+
+.content-layout-style {
+    margin-left: 10px;
+}
+
+.menu-style {
+    height: 100%;
+    border-right: 0;
+}
+
+.content-box-style {
+    height: 100vh;
+    padding: 24px;
+    margin: 0px;
+}
+
+.body-layout {
+    margin-top: 64px !important;
+}

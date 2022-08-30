@@ -1,0 +1,9 @@
+
+.header {
+    background: white !important;
+    /*border-color: #ff914d;*/
+    border: 0px solid #e2e2e2;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+}
