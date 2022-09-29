@@ -1,0 +1,12 @@
+.login-box {
+    background-color: #f6f4f4;
+    border: white;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    padding: 10px
+}
+
+.img-style {
+    margin-bottom: 30px;
+}

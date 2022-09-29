@@ -5,6 +5,8 @@ import React from 'react';
 import Navigator from '../navigator/Navigator';
 import Sidebar from '../sidebar/Sidebar';
 import CustomHeader from '../header/CustomHeader';
+import {useSelector} from 'react-redux';
+import {RootState} from '../index';
 
 const {Header, Content, Sider} = Layout;
 // const items1 = ['1', '2', '3'].map((key) => ({
@@ -13,12 +15,14 @@ const {Header, Content, Sider} = Layout;
 // }));
 
 export default function ParentLayout() {
+    const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
     return (
         <Layout>
-            <CustomHeader />
-            <Layout className="body-layout">
-                <Sidebar />
-                <Layout className="layout-background content-layout-style">
+            {isLoggedIn && <CustomHeader />}
+            <Layout className={`${isLoggedIn ? 'body-layout' : ''}`}>
+                {isLoggedIn && <Sidebar />}
+
+                <Layout className="layout-background">
                     {/*<Breadcrumb*/}
                     {/*    style={{*/}
                     {/*        margin: '16px 0',*/}

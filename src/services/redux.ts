@@ -1,20 +1,15 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {combinedReducer} from '../containers/reducer';
-import logger from 'redux';
 import {ENVIRONMENT} from '../constants/config';
+import logger from 'redux-logger';
 
 export function getStore() {
     let store = null;
-    if (ENVIRONMENT !== 'production') {
-        store = configureStore({
-            reducer: combinedReducer,
-            middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
-        });
-    } else {
-        store = configureStore({
-            reducer: combinedReducer,
-            middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
-        });
-    }
+    store = configureStore({
+        reducer: combinedReducer,
+        // @ts-ignore
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+    });
+
     return store;
 }

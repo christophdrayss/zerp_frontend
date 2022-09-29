@@ -1,5 +1,7 @@
 import React from 'react';
+import {} from 'react-router-dom';
 import {Breadcrumb, Layout, Menu} from 'antd';
+import {useNavigate} from 'react-router-dom';
 import {LaptopOutlined, NotificationOutlined, UserOutlined, DashboardOutlined} from '@ant-design/icons';
 import type {MenuProps, MenuTheme} from 'antd';
 
@@ -15,38 +17,15 @@ function getItem(label: string, key?: string, icon?: React.ReactNode, children?:
     } as MenuItem;
 }
 const items: MenuItem[] = [
-    getItem('Dashboard', 'd', <DashboardOutlined />, [
-        getItem('Orders', 'd1'),
-        getItem('Zerp Inventory', 'd2'),
-        getItem('Shopify Inventory', 'd3'),
-        getItem('Zalando Status', 'd4'),
-        getItem('Logs', 'd4'),
-    ]),
-    getItem('User Profile', 'u', <UserOutlined />, [getItem('Settings', 'u1'), getItem('Logout', 'u3')]),
+    getItem('Dashboard', 'd', <DashboardOutlined />, [getItem('Orders', 'orders'), getItem('Logs', 'logs')]),
+    getItem('User Profile', 'u', <UserOutlined />, [getItem('Settings', 'u1'), getItem('Logout', 'logout')]),
 ];
 
-console.log(items);
-
-const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
-    const key = String(index + 1);
-    return {
-        key: `sub${key}`,
-        icon: React.createElement(icon),
-        label: `    subnav ${key}`,
-        children: new Array(4).fill(null).map((_, j) => {
-            const subKey = index * 4 + j + 1;
-            return {
-                key: subKey,
-                label: `option${subKey}`,
-            };
-        }),
-    };
-});
-
 export default function Sidebar() {
+    const navigate = useNavigate();
     return (
         <Layout.Sider className="layout-background">
-            <Menu mode="inline" items={items} defaultOpenKeys={['d']} />
+            <Menu mode="inline" items={items} defaultOpenKeys={['d']} onClick={(e) => navigate(e.key)} />
         </Layout.Sider>
     );
 }
