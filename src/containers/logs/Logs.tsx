@@ -1,10 +1,12 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Typography, PageHeader, Space, Table, Tag} from 'antd';
 import {useDispatch, useSelector} from 'react-redux';
 import {getLogs} from './logs-slice';
 import {RootState} from '../index';
 import {ColumnsType} from 'antd/es/table';
+import {Pagination} from 'antd';
 import moment from 'moment';
+import './style.css';
 
 interface DataType {
     id: string;
@@ -95,18 +97,37 @@ const columns: ColumnsType<DataType> = [
 export default function Logs() {
     const dispatch = useDispatch<any>();
     const logs = useSelector((state: RootState) => state.log.logs);
+    const logsCount = useSelector((state: RootState) => state.log.logsCount);
+
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
 
     useEffect(() => {
-        dispatch(getLogs());
+        dispatch(getLogs(page, pageSize));
     }, []);
+
+    function handlePageChange(page: number, pageSize: number) {
+        console.log(page, pageSize);
+        setPage(page);
+        setPageSize(pageSize);
+        dispatch(getLogs(page, pageSize));
+    }
 
     return (
         <div>
             <div>
                 <Typography.Title level={2}>Logs</Typography.Title>
             </div>
-            {/*{JSON.stringify(logs)}*/}
-            <Table dataSource={logs} columns={columns} />
+            <Table dataSource={logs} columns={columns} pagination={false} />
+            <Pagination
+                className="pagination"
+                showSizeChanger
+                total={logsCount}
+                pageSize={pageSize}
+                defaultCurrent={1}
+                current={page}
+                onChange={(page, pageSize) => handlePageChange(page, pageSize)}
+            />
         </div>
     );
 }

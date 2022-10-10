@@ -8,7 +8,7 @@ import {AppDispatch, RootState} from '../index';
 const Orders = createSlice({
     name: 'orders',
     initialState: {
-        orders: false,
+        orders: [],
     },
     reducers: {
         getOrdersSuccess(state, action) {
@@ -17,9 +17,9 @@ const Orders = createSlice({
     },
 });
 
-export const getOrders = () => (dispatch: AppDispatch, getState: RootState) => {
+export const getOrders = (date: string) => (dispatch: AppDispatch, getState: RootState) => {
     network
-        .fetch('GET', '/orders', null)
+        .fetch('GET', `/orders?after=${date}`, null)
         .then((res: any) => {
             console.log(res.data);
         })

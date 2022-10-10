@@ -9,17 +9,19 @@ const Orders = createSlice({
     name: 'logs',
     initialState: {
         logs: [],
+        logsCount: 0,
     },
     reducers: {
         getLogsSuccess(state, action) {
-            state.logs = action.payload;
+            state.logs = action.payload.logs;
+            state.logsCount = action.payload.logsCount;
         },
     },
 });
 
-export const getLogs = () => (dispatch: any, getState: RootState) => {
+export const getLogs = (page: number, pageSize: number) => (dispatch: any, getState: RootState) => {
     network
-        .fetch('GET', '/logs', null)
+        .fetch('GET', `/logs?page=${page - 1}&pageSize=${pageSize}`, null)
         .then((res: any) => {
             dispatch(getLogsSuccess(res.data));
         })
