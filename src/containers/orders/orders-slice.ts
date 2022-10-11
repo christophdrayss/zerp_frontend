@@ -21,7 +21,7 @@ export const getOrders = (date: string) => (dispatch: AppDispatch, getState: Roo
     network
         .fetch('GET', `/orders?after=${date}`, null)
         .then((res: any) => {
-            console.log(res.data);
+            dispatch(getOrdersSuccess(res.data));
         })
         .catch(async (e) => {
             await message.error(JSON.stringify(e));

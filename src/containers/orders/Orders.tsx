@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Typography, PageHeader, Space, Table, DatePicker, Row, Col, Button, message} from 'antd';
+import {Typography, PageHeader, Space, Table, DatePicker, Row, Col, Button, message, Modal} from 'antd';
 import {useDispatch, useSelector} from 'react-redux';
 import {getOrders} from './orders-slice';
 import {ColumnsType} from 'antd/es/table';
@@ -7,62 +7,113 @@ import {AppDispatch, RootState, ThunkFunctionType} from '../index';
 import {AnyAction, Dispatch} from 'redux';
 import moment from 'moment';
 
-interface DataType {
-    key: string;
-    name: string;
-    age: number;
-    address: string;
-    tags: string[];
-}
-
 export default function Orders() {
     const dispatch = useDispatch<any>();
 
     const [createdAfter, setCreatedAfter] = useState<any>();
+    const [showModal, setShowModal] = useState(true);
 
     const orders = useSelector((state: RootState) => state.order.orders);
 
-    const columns: ColumnsType<DataType> = [
+    const columns: ColumnsType<any> = [
         {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            render: (text) => <a>{text}</a>,
+            title: 'Id',
+            dataIndex: 'id',
+            key: 'id',
+            render: (text) => <div>{text}</div>,
         },
         {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
+            title: 'Order Date',
+            dataIndex: 'attributes',
+            key: 'attributes.order_date',
+            render: (item) => <div>{moment(item?.order_date).format('ddd, DD-MMM-YYYY @ h:mm:ss A')}</div>,
         },
         {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
+            title: 'Shipping to',
+            dataIndex: 'attributes',
+            key: 'attributes.shipping_address.address_line_1',
+            render: (item) => <div>{item.shipping_address.address_line_1}</div>,
         },
         {
-            title: 'Tags',
-            key: 'tags',
-            dataIndex: 'tags',
-            render: (_, {tags}) => (
-                <>
-                    {tags.map((tag) => {
-                        let color = tag.length > 5 ? 'geekblue' : 'green';
-                        if (tag === 'loser') {
-                            color = 'volcano';
-                        }
-                    })}
-                </>
+            title: 'Billing to',
+            dataIndex: 'attributes',
+            key: 'attributes.billing_address.address_line_1',
+            render: (item) => <div>{item.billing_address.address_line_1}</div>,
+        },
+        {
+            title: 'Tracking',
+            key: '',
+            dataIndex: 'tracking',
+            render: (text, record) => (
+                <div>
+                    <div>
+                        <span style={{color: 'darkblue', fontWeight: 700}}>Tracking No:</span> {record.attributes.tracking_number}
+                    </div>
+                    <br />
+                    <div>
+                        <span style={{color: 'orange', fontWeight: 700}}>Return No:</span>{' '}
+                        {record.attributes.return_tracking_number}
+                    </div>
+                </div>
             ),
         },
         {
-            title: 'Action',
-            key: 'action',
-            render: (_, record) => (
-                <Space size="middle">
-                    <a>Invite {record.name}</a>
-                    <a>Delete</a>
-                </Space>
-            ),
+            title: 'Item Count',
+            dataIndex: 'attributes.order_lines_count',
+            key: 'attributes.order_lines_count',
+        },
+        {
+            title: 'Order Items',
+            key: '',
+            dataIndex: 'tracking',
+            render: (text, record) => {
+                let orders = [];
+                orders = record.orderItems.map((obj: any) => {
+                    let description = obj.orderItem.attributes.description;
+                    let initial = obj.orderItem.attributes.quantity_initial;
+                    let reserved = obj.orderItem.attributes.quantity_reserved;
+                    let shipped = obj.orderItem.attributes.quantity_shipped;
+                    let returned = obj.orderItem.attributes.quantity_returned;
+                    let canceled = obj.orderItem.attributes.quantity_canceled;
+                    return {description, initial, reserved, shipped, returned, canceled};
+                });
+                return (
+                    <div>
+                        {orders.map((obj: any) => {
+                            return (
+                                <div>
+                                    <div>{obj.description}</div>
+                                    <br />
+                                    <div>
+                                        <span style={{color: 'purple', fontWeight: 700}}>initial: </span>
+                                        {obj.initial}
+                                    </div>
+                                    <br />
+                                    <div>
+                                        <span style={{color: 'darkblue', fontWeight: 700}}>reserved:</span> {obj.reserved}
+                                    </div>
+                                    <br />
+                                    <div>
+                                        {' '}
+                                        <span style={{color: 'green', fontWeight: 700}}>shipped: </span>
+                                        {obj.shipped}
+                                    </div>
+                                    <br />
+                                    <div>
+                                        <span style={{color: 'orange', fontWeight: 700}}>returned: </span>
+                                        {obj.returned}
+                                    </div>
+                                    <br />
+                                    <div>
+                                        <span style={{color: 'red', fontWeight: 700}}>canceled: </span>
+                                        {obj.canceled}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                );
+            },
         },
     ];
 
@@ -101,10 +152,16 @@ export default function Orders() {
                 </Row>
                 <Row>
                     <Col span={24}>
-                        <Table dataSource={orders} columns={columns} pagination={false} />
+                        {/*{JSON.stringify(orders[0], null, 2)}*/}
+                        <Table bordered={true} dataSource={orders} columns={columns} pagination={false} />
                     </Col>
                 </Row>
             </div>
+            <Modal title="Order Update" footer={[]} visible={showModal}>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+            </Modal>
         </div>
     );
 }
