@@ -7,6 +7,7 @@ import Logout from '../login/Logout';
 import {RootState} from '../index';
 import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
+import OrderDetail from '../orders/OrderDetail';
 
 export default function Navigator() {
     // function AuthRequired({children, redirectTo}) {
@@ -37,6 +38,7 @@ export default function Navigator() {
 
                 {/*<Route path="/login" element={<Login />} />*/}
                 <Route path="/orders" element={<Orders />} />
+                <Route path="/orders/:orderId" element={<OrderDetail />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/" element={<Login />} />
                 <Route path="/logout" element={<Logout />} />

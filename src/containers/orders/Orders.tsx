@@ -6,21 +6,25 @@ import {ColumnsType} from 'antd/es/table';
 import {AppDispatch, RootState, ThunkFunctionType} from '../index';
 import {AnyAction, Dispatch} from 'redux';
 import moment from 'moment';
+import {useNavigate} from 'react-router-dom';
 
 export default function Orders() {
     const dispatch = useDispatch<any>();
-
+    const navigate = useNavigate();
     const [createdAfter, setCreatedAfter] = useState<any>();
-    const [showModal, setShowModal] = useState(true);
 
     const orders = useSelector((state: RootState) => state.order.orders);
+
+    function navigateToOrderDetail(id: string) {
+        navigate(`${id}`);
+    }
 
     const columns: ColumnsType<any> = [
         {
             title: 'Id',
             dataIndex: 'id',
             key: 'id',
-            render: (text) => <div>{text}</div>,
+            render: (text) => <a onClick={() => navigateToOrderDetail(text)}>{text}</a>,
         },
         {
             title: 'Order Date',
@@ -157,11 +161,6 @@ export default function Orders() {
                     </Col>
                 </Row>
             </div>
-            <Modal title="Order Update" footer={[]} visible={showModal}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-            </Modal>
         </div>
     );
 }
