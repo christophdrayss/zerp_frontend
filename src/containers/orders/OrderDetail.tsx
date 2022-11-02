@@ -53,11 +53,11 @@ export default function OrderDetail() {
                 <Col span={24}>
                     <Collapse>
                         <Collapse.Panel header="Order Items" key="1">
-                            {orderDetail.orderItems.map((item: any, idx: number) => {
+                            {orderDetail?.orderItems?.map((item: any, idx: number) => {
                                 return (
                                     <Collapse defaultActiveKey={idx}>
                                         <Collapse.Panel header={`Item no: ${idx + 1}`} key={idx + 2}>
-                                            {item.orderLines.map((line: any, idx: number) => {
+                                            {item?.orderLines?.map((line: any, idx: number) => {
                                                 return (
                                                     <Row>
                                                         <Col>
