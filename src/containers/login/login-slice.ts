@@ -6,6 +6,7 @@ import {message} from 'antd';
 import {NavigateFunction} from 'react-router-dom';
 import {AUTH_GOOGLE} from '../../constants/network-calls';
 import {loginSuccess, onLogin} from '../auth/auth-slice';
+import {API_BASE_URL} from '../../constants/config';
 const Login = createSlice({
     name: 'login',
     initialState: {
@@ -16,6 +17,8 @@ const Login = createSlice({
 });
 
 export const googleLogin = (credentials: CodeResponse, navigate: NavigateFunction) => (dispatch: any, getState: RootState) => {
+    console.log('BASE_URL');
+    console.log(API_BASE_URL);
     network
         .fetch('POST', AUTH_GOOGLE, credentials)
         .then((res: any) => {
