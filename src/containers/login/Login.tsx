@@ -49,7 +49,7 @@ export default function Login() {
                 <div className="row mt-5">
                     <div className="col px-5">
                         We take our customers privacy very seriously, <a href="https://zerp.io/data-protection/">click here</a> to
-                        go through our privacy policy. Also, check out our <a href="https://zerp.io/tcs/">terms and services</a>
+                        go through our privacy policy. Also, check out our <a href="https://zerp.io/tcs/">terms of services</a>
                     </div>
                 </div>
             </div>
