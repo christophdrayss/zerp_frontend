@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import Login from '../login/Login';
 import Orders from '../orders/Orders';
 import Logs from '../logs/Logs';
@@ -8,6 +8,7 @@ import {RootState} from '../index';
 import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import OrderDetail from '../orders/OrderDetail';
+import NotFound from '../404-not-found/NotFound';
 
 export default function Navigator() {
     // function AuthRequired({children, redirectTo}) {
@@ -43,7 +44,9 @@ export default function Navigator() {
                 <Route path="/" element={<Login />} />
                 <Route path="/logout" element={<Logout />} />
                 <Route path="/logs" element={<Logs />} />
-                {/*<Route path="/" element={<Navigate to="/providers" />} />*/}
+                {/*<Route path="/404" element={<NotFound />} />*/}
+                {/*<Route path="*" element={<Navigate to="/404" />} />*/}
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </>
     );
