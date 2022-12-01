@@ -7,6 +7,12 @@
     padding: 10px
 }
 
-.img-style {
-    margin-bottom: 30px;
+.box {
+    background-color: rgba(255,145,77,0.19);
+    padding: 100px 50px;
+    border: rgba(255,145,77,0.1);
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 20px;
+
 }

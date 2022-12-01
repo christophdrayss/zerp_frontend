@@ -3,7 +3,7 @@ import {useParams} from 'react-router';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../index';
 import {getOrderFromState, updateStatus, updateTracking} from './orders-slice';
-import ReactJson from 'react-json-view';
+import {JsonViewer} from '@textea/json-viewer';
 import {Row, Col, Form, Input, Radio, Button, message, Typography} from 'antd';
 import {Collapse} from 'antd';
 
@@ -80,11 +80,7 @@ export default function OrderDetail() {
                                                             </Row>
                                                             <Row>
                                                                 <Col>
-                                                                    <ReactJson
-                                                                        name={'attributes'}
-                                                                        collapsed={true}
-                                                                        src={line.attributes}
-                                                                    />
+                                                                    <JsonViewer value={line.attributes} />
                                                                 </Col>
                                                             </Row>
                                                             <Row>
