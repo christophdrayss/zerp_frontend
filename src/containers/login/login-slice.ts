@@ -4,7 +4,7 @@ import {AppDispatch, RootState} from '../index';
 import network from '../../services/network';
 import {message} from 'antd';
 import {NavigateFunction} from 'react-router-dom';
-import {AUTH_GOOGLE} from '../../constants/network-calls';
+import {AUTH_GOOGLE, GET_LIVE_STATUS} from '../../constants/network-calls';
 import {loginSuccess, onLogin} from '../auth/auth-slice';
 import {API_BASE_URL} from '../../constants/config';
 const Login = createSlice({
@@ -17,8 +17,6 @@ const Login = createSlice({
 });
 
 export const googleLogin = (credentials: CodeResponse, navigate: NavigateFunction) => (dispatch: any, getState: RootState) => {
-    console.log('BASE_URL');
-    console.log(API_BASE_URL);
     network
         .fetch('POST', AUTH_GOOGLE, credentials)
         .then((res: any) => {
@@ -26,6 +24,19 @@ export const googleLogin = (credentials: CodeResponse, navigate: NavigateFunctio
         })
         .catch(async (e) => {
             await message.error(e.message);
+        });
+};
+export const checkLiveStatus = () => (dispatch: any, getState: RootState) => {
+    console.log('BASE_URL');
+    console.log(API_BASE_URL);
+    network
+        .fetch('GET', GET_LIVE_STATUS)
+        .then((res: any) => {
+            console.log('GET LIVE RETURNED');
+            console.log(res.data);
+        })
+        .catch(async (e) => {
+            await message.error(JSON.stringify(e));
         });
 };
 

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {CredentialResponse, GoogleLogin, CodeResponse} from '@react-oauth/google';
 import {useGoogleLogin} from '@react-oauth/google';
 import {useDispatch, useSelector} from 'react-redux';
-import {googleLogin} from './login-slice';
+import {checkLiveStatus, googleLogin} from './login-slice';
 import {Button} from 'antd';
 import GoogleButton from 'react-google-button';
 import {useNavigate} from 'react-router-dom';
@@ -39,6 +39,13 @@ export default function Login() {
                 <div className="row mb-4">
                     <div className="d-flex flex-column col align-items-center">
                         <img src={'https://zerp.io/wp-content/uploads/2022/07/Untitled-design-24.png'} width={350} />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col justify-content-center align-items-center">
+                        <button onClick={() => dispatch(checkLiveStatus())} className="btn btn-info">
+                            Is Alive
+                        </button>
                     </div>
                 </div>
                 <div className="row">
