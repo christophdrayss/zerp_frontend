@@ -41,13 +41,13 @@ export default function Login() {
                         <img src={'https://zerp.io/wp-content/uploads/2022/07/Untitled-design-24.png'} width={350} />
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col justify-content-center align-items-center">
-                        <button onClick={() => dispatch(checkLiveStatus())} className="btn btn-info">
-                            Is Alive
-                        </button>
-                    </div>
-                </div>
+                {/*<div className="row">*/}
+                {/*    <div className="col justify-content-center align-items-center">*/}
+                {/*        <button onClick={() => dispatch(checkLiveStatus())} className="btn btn-info">*/}
+                {/*            Is Alive*/}
+                {/*        </button>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
                 <div className="row">
                     <div className="col justify-content-center align-items-center">
                         <GoogleButton onClick={login} />
